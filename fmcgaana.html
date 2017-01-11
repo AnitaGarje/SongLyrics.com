@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+	<title>Gaana.com</title>
+	<meta http-equi="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1"></meta>
+	<meta name="author" content="Anita Garje">
+
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="customcss/main.css">
+
+  <!--For Aj-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+
+  <script type="text/javascript">
+    var app = angular.module('myApp', []);
+    app.controller('myController', ['$scope','$http', function($scope,$http){
+
+        $scope.websites = [];
+        $http
+          .get('https://freemusicarchive.org/api/get/curators.json?api_key=NQE7G62WH6NU07DX')
+          .then(function sucess(response) {
+            $scope.websites = response.data;
+            console.log($scope.websites);
+          },function failure(response) {
+            console.error("Error");
+          })
+
+      $scope.tracks = [];
+        $http
+          .get('https://freemusicarchive.org/api/get/tracks.json?api_key=NQE7G62WH6NU07DX')
+          .then(function sucess(response) {
+            $scope.tracks = response.data.dataset;
+            console.log($scope.tracks);
+          },function failure(response) {
+            console.error("Error");
+          })
+
+
+          
+
+        /* this is good practice or below
+        $http({
+          method:'GET',
+          url:'https://musixmatchcom-musixmatch.p.mashape.com/wsr/1.1/track.snippet.get?track_id=15449912',
+          headers:  {
+            'X-Mashape-Key': 'Mg14mylFurmshyimgXVr5U8vUKhqp1to6sTjsnY31jd5a4H0Z8',
+            'Accept': 'application/json'
+        }
+
+        }).then(function sucess(response){
+          $scope.websites=response.data;
+        },function failure(response){
+          console.error("Error");
+        })*/
+
+          
+    }])
+  </script>
+ 
+</head>
+<body ng-controller="myController">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Gaana</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+      <div class="row"> <!--row contians search n right 2-->
+        <div class="col-sm-6">
+          <input type="text" class="form-control searchbox" placeholder="Search by Artist,Album,Movie">
+        </div>
+        <button type="submit" class="btn btn-default searchbox">Search</button>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download App <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Android</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">iPhone</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Login/Sign Up</a></li>
+      </ul>
+      </div> <!--row contians search n right 2 end-->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+        
+
+
+<div class="col-sm-2"><!--Left Panel-->
+	
+    <div class="row leftlist">
+		    <a href="#"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
+		</div>
+    <div class="row leftlist">
+      <a href="#"><i class="fa fa-home" aria-hidden="true"></i>Radio</a>
+    </div>
+		<div class="row leftlist">
+      <a href="#"><i class="fa fa-cc-discover" aria-hidden="true"></i>Discover</a>
+    </div>
+		<div class="row leftlist">
+      <a href="#"><i class="fa fa-chrome" aria-hidden="true"></i>Browse</a>
+    </div>
+		<div class="row leftlist">
+      <a href="#"><i class="fa fa-arrow-up" aria-hidden="true"></i>Upgrade</a>
+    </div>
+	
+</div><!--End Left Panel-->
+
+<div class="col-sm-7 container"><!--middle Panel-->
+
+	<div class="row" > <!--1row in middle container-->
+    <div class="col-sm-4 col-md-3" ng-repeat="track in tracks">
+        <div  class="thumbnail imgtb">
+            <img  ng-src="{{track.track_image_file}}" alt="...">
+              <div class="caption">
+                <h4>{{track.track_title}}</h4>
+              </div>
+            </div>
+      </div>
+  </div>
+</div><!--End middle Panel-->
+
+
+<div class="col-sm-3"><!--Right Panel-->
+	
+</div><!--End Right Panel-->
+ 
+        
+
+
+
+<footer class="footer">
+    <div class="container">
+       <audio controls>
+          <source src="https://freemusicarchive.org/music/download/f47194f513ff40651b8cffaa4d8feb54c7ff856e" type="audio/mpeg">
+        Your browser does not support the audio element.
+        </audio>
+    </div>
+</footer>
+<script type="text/javascript" src="jquery/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/custom.js"></script>
+ <!-- Compiled and minified JavaScript -->
+
+</body>
+</html>
